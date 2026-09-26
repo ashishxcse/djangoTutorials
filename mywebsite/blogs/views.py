@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse 
+from django.http import HttpResponse, HttpResponseNotFound
 # Create your views here.
 
 def home_page(request):
@@ -14,11 +14,18 @@ def blogposts(request):
 # def Django_intro(request):
 #     return HttpResponse("Django Intro")
 
-def blog_post(request, slug):
-    if slug == 'python-intro':
-        res = "Python Post"
+blog_names = {
+    'python-intro': '<h1> Python Post </h1>',
+    'django-intro': '<h1> Django Post </h1>',
+    'sql-intro': '<h1> SQL Post </h1>'
+}
 
-    elif slug == 'django-intro':
-        res = 'Django Post'
+def blog_post(request, blog):
+    try:
+        res = blog_names[blog]
 
-    return HttpResponse(res)
+    except Exception:
+        return HttpResponseNotFound("<h1>Blog not found</h1>")
+
+    else:
+        return HttpResponse(res)
