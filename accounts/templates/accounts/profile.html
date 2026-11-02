@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile | Inkspace{% endblock %}
+
+{% block extra_head %}
+<style>
+  .profile-head { display:flex; align-items:center; gap:16px; margin-bottom:20px; }
+  .avatar { width:64px; height:64px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.8rem; font-weight:700; text-transform:uppercase; flex-shrink:0; }
+  .profile-head h2 { margin:0; }
+  .profile-head p { margin:2px 0 0; }
+  .info { width:100%; border-collapse:collapse; }
+  .info td { padding:10px 0; border-bottom:1px solid var(--border); vertical-align:top; }
+  .info td:first-child { width:40%; color:var(--muted); font-weight:600; font-size:.9rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="profile-head">
+    <div class="avatar">{{ user.username|first }}</div>
+    <div>
+      <h2>{{ user.get_full_name|default:user.username }}</h2>
+      <p class="help">@{{ user.username }}</p>
+    </div>
+  </div>
+
+  <table class="info">
+    <tr>
+      <td>Email</td>
+      <td>{{ user.email|default:"Not added" }}</td>
+    </tr>
+    {% comment %} <tr>
+      <td>Organiza</td>
+      <td>{{ profile.organization|default:"Not added" }}</td>
+    </tr>
+    <tr>
+      <td>Bio</td>
+      <td>{{ profile.bio|default:"Not added" }}</td>
+    </tr> {% endcomment %}
+    <tr>
+      <td>Member since</td>
+      <td>{{ user.date_joined|date:"d M Y" }}</td>
+    </tr>
+    <tr>
+      <td>Last login</td>
+      <td>{{ user.last_login|date:"d M Y, H:i" }}</td>
+    </tr>
+  </table>
+
+  <div class="links">
+    <p><a href="{% url 'password_reset' %}">Change password</a></p>
+    <p><a href="{% url 'edit_profile' %}">edit profile</a></p>
+  </div>
+</div>
+{% endblock %}

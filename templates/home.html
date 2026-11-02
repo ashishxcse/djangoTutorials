@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Inkspace | Real-time collaborative whiteboard{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <h1>Draw, discuss and plan together</h1>
+  <p>Inkspace is a real-time whiteboard and chat for classrooms and teams. Create a room, invite your people and start collaborating.</p>
+
+  {% if user.is_authenticated %}
+    <p>Welcome back, <strong>{{ user.username }}</strong>.</p>
+    {# TODO: yahan room create/join ka link lagao, jaise {% url 'room_list' %} #}
+    <a href="#" class="btn">Go to my rooms</a>
+    <a href="{% url "dashboard" %}" class="btn">Go to Dashboard</a>
+  {% else %}
+    <a href="{% url 'register' %}" class="btn">Get started</a>
+    <a href="{% url 'login' %}" class="btn outline">Login</a>
+  {% endif %}
+</section>
+
+<section class="features">
+  <div class="feature">
+    <h3>Shared whiteboard</h3>
+    <p>Everyone in the room sees every stroke instantly.</p>
+  </div>
+  <div class="feature">
+    <h3>Live chat</h3>
+    <p>Discuss ideas right next to the board.</p>
+  </div>
+  <div class="feature">
+    <h3>Roles and rooms</h3>
+    <p>Hosts control who can draw. Organizations keep rooms private.</p>
+  </div>
+</section>
+{% endblock %}
